@@ -1,23 +1,19 @@
-import path from 'path';
-import { defineConfig, loadEnv } from 'vite';
-import react from '@vitejs/plugin-react';
 
-export default defineConfig(({ mode }) => {
-    const env = loadEnv(mode, '.', '');
-    return {
-      server: {
-        port: 3000,
-        host: '0.0.0.0',
-      },
-      plugins: [react()],
-      define: {
-        'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
-      },
-      resolve: {
-        alias: {
-          '@': path.resolve(__dirname, '.'),
-        }
-      }
-    };
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  // This must match your GitHub repository name
+  base: '/AssignMate/',
+  build: {
+    // The directory where the build files will be placed
+    outDir: 'dist',
+    // Directory to nest generated assets under
+    assetsDir: 'assets',
+    // Ensure the build process is clean
+    emptyOutDir: true,
+  },
+  server: {
+    // Ensures local development works correctly with SPA routing
+    historyApiFallback: true,
+  }
 });
